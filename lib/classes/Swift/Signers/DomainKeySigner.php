@@ -39,6 +39,13 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
     protected $_selector;
 
     /**
+     * Passphrase
+     *
+     * @var string
+     */
+    protected $_passphrase;
+
+    /**
      * Hash algorithm used
      *
      * @var string
@@ -124,13 +131,15 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      * @param string $privateKey
      * @param string $domainName
      * @param string $selector
+     * @param string $passphrase
      */
-    public function __construct($privateKey, $domainName, $selector)
+    public function __construct($privateKey, $domainName, $selector, $passphrase = '')
     {
         $this->_privateKey = $privateKey;
         $this->_domainName = $domainName;
         $this->_signerIdentity = '@' . $domainName;
         $this->_selector = $selector;
+        $this->_passphrase = $passphrase;
     }
 
     /**
@@ -139,10 +148,11 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      * @param string $privateKey
      * @param string $domainName
      * @param string $selector
+     * @param string $passphrase
      * @return Swift_Signers_DomainKeySigner
      */
-    public static function newInstance($privateKey, $domainName, $selector) {
-        return new static($privateKey, $domainName, $selector);
+    public static function newInstance($privateKey, $domainName, $selector, $passphrase = '') {
+        return new static($privateKey, $domainName, $selector, $passphrase);
     }
     
     /**
@@ -508,7 +518,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
     private function _getEncryptedHash()
     {
         $signature = '';
-        $pkeyId=openssl_get_privatekey($this->_privateKey);
+        $pkeyId=openssl_get_privatekey($this->_privateKey, $this->_passphrase);
         if (!$pkeyId) {
             throw new Swift_SwiftException('Unable to load DomainKey Private Key ['.openssl_error_string().']');
         }
