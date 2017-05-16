@@ -186,10 +186,10 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
         $firstLineOffset = 0;
 
         // If it's not already a valid parameter value...
-        if (!preg_match('/^'.self::TOKEN_REGEX.'$/D', $value)) {
+        if (!preg_match('/^'.self::TOKEN_REGEX.'$/Du', $value)) {
             // TODO: text, or something else??
             // ... and it's not ascii
-            if (!preg_match('/^'.$this->getGrammar()->getDefinition('text').'*$/D', $value)) {
+            if (!preg_match('/^'.$this->getGrammar()->getDefinition('text').'*$/Du', $value)) {
                 $encoded = true;
                 // Allow space for the indices, charset and language
                 $maxValueLength = $this->getMaxLineLength() - strlen($name.'*N*="";') - 1;
@@ -241,7 +241,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
      */
     private function _getEndOfParameterValue($value, $encoded = false, $firstLine = false)
     {
-        if (!preg_match('/^'.self::TOKEN_REGEX.'$/D', $value)) {
+        if (!preg_match('/^'.self::TOKEN_REGEX.'$/Du', $value)) {
             $value = '"'.$value.'"';
         }
         $prepend = '=';

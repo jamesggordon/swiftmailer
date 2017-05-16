@@ -824,7 +824,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _assertValidId($id)
     {
-        if (!preg_match('/^'.$this->_grammar->getDefinition('id-left').'@'.$this->_grammar->getDefinition('id-right').'$/D', $id)) {
+        if (!preg_match('/^'.$this->_grammar->getDefinition('id-left').'@'.$this->_grammar->getDefinition('id-right').'$/Du', $id)) {
             throw new Swift_RfcComplianceException('Invalid ID given <'.$id.'>');
         }
     }

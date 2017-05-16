@@ -105,7 +105,7 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
     {
         $charset = trim(strtolower($charset));
         foreach (self::$_map as $pattern => $spec) {
-            $re = '/^'.$pattern.'$/D';
+            $re = '/^'.$pattern.'$/Du';
             if (preg_match($re, $charset)) {
                 if (!array_key_exists($pattern, self::$_loaded)) {
                     $reflector = new ReflectionClass($spec['class']);

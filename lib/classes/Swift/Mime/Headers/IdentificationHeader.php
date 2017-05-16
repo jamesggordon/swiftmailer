@@ -169,7 +169,7 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
     {
         if (!preg_match(
             '/^'.$this->getGrammar()->getDefinition('id-left').'@'.
-            $this->getGrammar()->getDefinition('id-right').'$/D',
+            $this->getGrammar()->getDefinition('id-right').'$/Du',
             $id
             )) {
             throw new Swift_RfcComplianceException(

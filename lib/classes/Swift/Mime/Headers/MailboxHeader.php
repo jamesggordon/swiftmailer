@@ -332,7 +332,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
     }
 
     /**
-     * Throws an Exception if the address passed does not comply with RFC 2822.
+     * Throws an Exception if the address passed does not comply with RFC 2822/6532.
      *
      * @param string $address
      *
@@ -340,11 +340,11 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     private function _assertValidAddress($address)
     {
-        if (!preg_match('/^'.$this->getGrammar()->getDefinition('addr-spec').'$/D',
+        if (!preg_match('/^'.$this->getGrammar()->getDefinition('addr-spec').'$/Du',
             $address)) {
             throw new Swift_RfcComplianceException(
                 'Address in mailbox given ['.$address.
-                '] does not comply with RFC 2822, 3.6.2.'
+                '] does not comply with RFC 6532'
                 );
         }
     }
